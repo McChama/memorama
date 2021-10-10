@@ -22,6 +22,7 @@ let IMG_COUNTER = {
     'shield': 0,
     'vaccine': 0
 }
+
 const keyGenerator = (obj) => {
     const keys = Object.keys(obj)
     return keys[keys.length * Math.random() << 0 ]
@@ -38,20 +39,30 @@ const imgProvider = (imgSrc, counter) => {
     }
     return imgSrc[randomKey]
 }
-const initCards = (myClassSelector) => {
-    
-    myClassSelector.forEach((Card) => {
-        const img = Card.children[0]
-        const myImg = imgProvider(IMG_URL, IMG_COUNTER)
-        img.setAttribute('src', myImg)
-    })
-    
-}
 
-const restart = () => {
+const initCards = (imageSelector, show = false, imgData = []) => {
+    const imgSRC = [...imageSelector].map((img, index) => {
+        let myImg
+        if (show) myImg = (imgData.length === 0) ? imgProvider(IMG_URL, IMG_COUNTER) : imgData[index]
+        else myImg = 'media/code-signs.png'
+
+        img.setAttribute('src', myImg)
+        return myImg
+    })
+    return imgSRC
+}
+const showCards = () => initCards(_CardsImg, true, cardData)
+const hideCards = () => initCards(_CardsImg, false)
+
+const _CardsImg = document.querySelectorAll('.card-item')
+let cardData = []
+
+
+const start = () => {
     Object.assign(IMG_COUNTER, INITIAL_COUNTER)
-    const Cards = document.querySelectorAll('.img-container')
-    initCards(Cards, IMG_COUNTER)
-    console.log(IMG_COUNTER)
+    cardData = initCards(_CardsImg, true)
+    setTimeout(() => {
+        hideCards()
+    }, 5000)
 }
 

@@ -12,12 +12,6 @@ img{
     justify-self: center; 
 }
 
-.front{
-    display: none;
-}
-.back{
-    display: inline;
-}
 .img-container{
     cursor: pointer;
     display: flex;
